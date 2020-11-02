@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-up" width="64" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="2">
+ <tileset firstgid="1" source="basic.tsx"/>
+ <layer id="1" name="ground" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6Grf9OTsQ8krJqqqqqqqqqqqqqqqqqqqqr6+gB+ABAB
+  </data>
+ </layer>
+ <layer id="2" name="background" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJzt2ssKgzAUBNBQ//+fuyp00QqSyePqGZit8ciVSPBorR2qqps1ndUefv47+1/h8tfy7x5+/pHv+u6p5k/PWbVZ5+ev6k+uxf9sf2qf4a/pT4Wff9Y97XgOwL/fTM7MVePMs6kZ4b//jJ+Fn7+qP3GP/Pz8/Pz8/Bn/1Wumy8/Pz7/K/30m8usa6X+ies5hnuBfNVv/1p4dfn5+/mr+1LNb6e/Zn/kz/rNvhdH+nvCPX5+fX1X10zczwRiw
+  </data>
+ </layer>
+ <layer id="4" name="foreground" width="64" height="64">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAAAAAACAtwFAAAAB
+  </data>
+ </layer>
+ <objectgroup id="5" name="gameObjects"/>
+ <objectgroup id="7" name="playerSpawnLocation">
+  <object id="1" x="845" y="1001">
+   <point/>
+  </object>
+ </objectgroup>
+</map>
