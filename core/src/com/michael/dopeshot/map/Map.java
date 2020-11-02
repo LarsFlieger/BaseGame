@@ -9,19 +9,38 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+
+import static com.michael.dopeshot.BaseGame.UNIT_SCALE;
 
 public class Map {
     public static final String TAG = Map.class.getSimpleName();
 
     private final TiledMap tiledMap;
     private final Array<CollisionArea> collisionAreas;
+    private final Vector2 playerSpawnLocation;
 
     public Map(final TiledMap tiledMap) {
         this.tiledMap = tiledMap;
-        collisionAreas = new Array<CollisionArea>();
+        this.collisionAreas = new Array<CollisionArea>();
+        this.playerSpawnLocation = new Vector2();
 
         parseCollisionLayer();
+        parsePlayerSpawnLocation();
+    }
+
+    //TODO: This is horrible coded.. :/ Have to find a better solution for this.
+    private void parsePlayerSpawnLocation() {
+        MapObjects playerSpawnLocationLayer = tiledMap.getLayers().get("playerSpawnLocation").getObjects();
+        if(playerSpawnLocationLayer == null) {
+            Gdx.app.debug(TAG, "The map doesn't have a 'playerSpawnLocation' layer. Create a layer called 'playerSpawnLocation' with a point object. This object will be used as a spawn point for the player.");
+            return;
+        }
+        final RectangleMapObject playerSpawnLocationFromLayer =  (RectangleMapObject) playerSpawnLocationLayer.get(0);
+        final Rectangle playerSpawnLocation = playerSpawnLocationFromLayer.getRectangle();
+        this.playerSpawnLocation.set(playerSpawnLocation.x * UNIT_SCALE, playerSpawnLocation.y * UNIT_SCALE);
+
     }
 
     private void parseCollisionLayer() {
@@ -34,7 +53,7 @@ public class Map {
 
         final MapObjects mapObjects = collisionLayer.getObjects();
         if (mapObjects == null) {
-            Gdx.app.debug(TAG, "mapObjects is null. You don't have any collection on your map. Are you sure to continue?.");
+            Gdx.app.debug(TAG, "mapObjects is null. You don't have any collision on your map. Are you sure to continue?.");
             return;
         }
 /*
@@ -81,5 +100,9 @@ public class Map {
 
     public Array<CollisionArea> getCollisionAreas() {
         return collisionAreas;
+    }
+
+    public Vector2 getPlayerSpawnLocation() {
+        return playerSpawnLocation;
     }
 }

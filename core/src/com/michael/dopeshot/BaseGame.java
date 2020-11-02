@@ -86,7 +86,6 @@ public class BaseGame extends Game {
 			Gdx.app.debug(TAG, "Switching to screen: " + screenType);
 			setScreen(screen);
 		}
-
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class DesktopLauncher {
         config.height = 1080;
         config.resizable = true;
         config.fullscreen = false;
-        config.samples = 2; //anti aliasing
+        config.samples = 0; //anti aliasing
         config.vSyncEnabled = false;
         config.foregroundFPS = 60;
         config.backgroundFPS = 30;

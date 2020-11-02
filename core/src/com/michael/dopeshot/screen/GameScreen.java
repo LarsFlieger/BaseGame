@@ -8,10 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.michael.dopeshot.BaseGame;
 import com.michael.dopeshot.map.CollisionArea;
 import com.michael.dopeshot.map.Map;
+
+import java.util.Arrays;
 
 import static com.michael.dopeshot.BaseGame.*;
 
@@ -19,7 +22,7 @@ public class GameScreen extends AbstractScreen {
     private final BodyDef bodyDef;
     private final FixtureDef fixtureDef;
 
-    private final Body player;
+    private Body player;
 
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final OrthographicCamera gameCamera;
@@ -42,25 +45,6 @@ public class GameScreen extends AbstractScreen {
         bodyDef = new BodyDef();
         fixtureDef = new FixtureDef();
 
-        // create player
-        bodyDef.position.set(8, 8);
-        bodyDef.gravityScale = 1;
-        bodyDef.fixedRotation = true;
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        player = world.createBody(bodyDef);
-        player.setUserData("PLAYER");
-
-        fixtureDef.density = 1;
-        fixtureDef.isSensor = false;
-        fixtureDef.restitution = 0;
-        fixtureDef.friction = 0.2f;
-        fixtureDef.filter.categoryBits = BIT_PLAYER;
-        fixtureDef.filter.maskBits = BIT_GROUND;
-        final PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.5f, 0.5f);
-        fixtureDef.shape = polygonShape;
-        player.createFixture(fixtureDef);
-        polygonShape.dispose();
 /*
         // create room
         bodyDef.position.set(0, 0);
@@ -88,12 +72,31 @@ public class GameScreen extends AbstractScreen {
         map = new Map(tiledMap);
 
         spawnCollisionAreas();
-        //player.getPosition().set();
+        spawnPlayer(map.getPlayerSpawnLocation());
+
+    }
+
+    public void spawnPlayer(Vector2 spawnPoint) {
+        resetBodiesAndFixtureDefinition();
+
+        bodyDef.position.set(spawnPoint);
+        bodyDef.fixedRotation = true;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        player = world.createBody(bodyDef);
+        player.setUserData("PLAYER");
+
+        fixtureDef.filter.categoryBits = BIT_PLAYER;
+        fixtureDef.filter.maskBits = BIT_GROUND;
+        final PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(0.5f, 0.5f);
+        fixtureDef.shape = polygonShape;
+        player.createFixture(fixtureDef);
+        polygonShape.dispose();
     }
 
     private void spawnCollisionAreas() {
         for(final CollisionArea collisionArea : map.getCollisionAreas()) {
-            resetBodieAndFixtureDefinition();
+            resetBodiesAndFixtureDefinition();
             bodyDef.position.set(collisionArea.getX(), collisionArea.getY());
             bodyDef.fixedRotation = true;
             final Body body = world.createBody(bodyDef);
@@ -109,7 +112,7 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
-    private void resetBodieAndFixtureDefinition() {
+    private void resetBodiesAndFixtureDefinition() {
         bodyDef.position.set(0,0);
         bodyDef.gravityScale = 1;
         bodyDef.type = BodyDef.BodyType.StaticBody;
