@@ -24,6 +24,7 @@ public class GameScreen extends AbstractScreen {
         bodyDef.gravityScale = 1;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         Body body = world.createBody(bodyDef);
+        body.setUserData("CIRCLE");
 
         fixtureDef.isSensor = false;
         fixtureDef.restitution = 0.5f;
@@ -36,12 +37,24 @@ public class GameScreen extends AbstractScreen {
         body.createFixture(fixtureDef);
         cShape.dispose();
 
+        fixtureDef.isSensor = true;
+        fixtureDef.restitution = 0;
+        fixtureDef.friction = 0.2f;
+        fixtureDef.filter.categoryBits = BIT_CIRCLE;
+        fixtureDef.filter.maskBits = BIT_BOX;
+        ChainShape chainShape = new ChainShape();
+        chainShape.createChain(new float[]{-0.5f, -0.7f, 0.5f, -0.7f});
+        fixtureDef.shape = chainShape;
+        body.createFixture(fixtureDef);
+        chainShape.dispose();
+
 
         // create box
         bodyDef.position.set(7.43f, 4);
         bodyDef.gravityScale = 1;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
+        body.setUserData("BOX");
 
         fixtureDef.isSensor = false;
         fixtureDef.restitution = 0.5f;
@@ -59,6 +72,7 @@ public class GameScreen extends AbstractScreen {
         bodyDef.gravityScale = 1;
         bodyDef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bodyDef);
+        body.setUserData("PLATFORM");
 
         fixtureDef.isSensor = false;
         fixtureDef.restitution = 0.5f;

@@ -29,6 +29,7 @@ public class BaseGame extends Game {
 	public static final short BIT_GROUND = 1<<2;
 
 	private World world;
+	private WorldContactListener worldContactListener;
 	private Box2DDebugRenderer box2DDebugRenderer;
 
 	private static final float FIXED_TIME_STEP = 1 / 60f;
@@ -41,6 +42,8 @@ public class BaseGame extends Game {
 
 		Box2D.init();
 		world = new World(new Vector2(0, -9.81f), true);
+		worldContactListener = new WorldContactListener();
+		world.setContactListener(worldContactListener);
 		box2DDebugRenderer = new Box2DDebugRenderer();
 
 		screenViewport = new FitViewport(16,9);
@@ -71,7 +74,7 @@ public class BaseGame extends Game {
 	@Override
 	public void render() {
 		super.render();
-		Gdx.app.log("Info", "FPS: " + Gdx.graphics.getFramesPerSecond() + " Delta:" + Gdx.graphics.getRawDeltaTime());
+		//Gdx.app.log("Info", "FPS: " + Gdx.graphics.getFramesPerSecond() + " Delta:" + Gdx.graphics.getRawDeltaTime());
 
 		accumulator += Math.min(0.25f, Gdx.graphics.getRawDeltaTime());
 		while(accumulator >= FIXED_TIME_STEP) {
