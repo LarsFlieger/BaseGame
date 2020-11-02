@@ -88,6 +88,7 @@ public class GameScreen extends AbstractScreen {
         map = new Map(tiledMap);
 
         spawnCollisionAreas();
+        //player.getPosition().set();
     }
 
     private void spawnCollisionAreas() {

@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.michael.dopeshot.BaseGame;
 
 public class LoadingScreen extends AbstractScreen{
+    public final String TAG = LoadingScreen.class.getSimpleName();
     private final AssetManager assetManager;
 
     public LoadingScreen(final BaseGame context) {
@@ -29,6 +30,7 @@ public class LoadingScreen extends AbstractScreen{
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        Gdx.app.debug(TAG, "Asset loading: " + assetManager.getProgress());
         if(assetManager.update()) {
             context.setScreen(ScreenType.GAME);
         }
