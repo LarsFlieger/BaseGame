@@ -30,7 +30,7 @@ public class BaseGame extends Game {
 	private OrthographicCamera gameCamera;
 	private FitViewport screenViewport;
 
-	public static final float UNIT_SCALE = 32; // Set pixel for one units (e.g. for the map)
+	public static final float UNIT_SCALE = 1/32f; // Set pixel for one units (e.g. for the map)
 	public static final short BIT_PLAYER = 1<<0;
 	public static final short BIT_GROUND = 1<<1;
 
