@@ -51,8 +51,8 @@ public class Map {
             return;
         }
 
-        final MapObjects mapObjects = collisionLayer.getObjects();
-        if (mapObjects == null) {
+        final MapObjects mapObjects = collisionLayer.getObjects(); //TODO getObjects is never null.. Maybe make this shorter
+        if (mapObjects.getCount() == 0) {
             Gdx.app.debug(TAG, "mapObjects is null. You don't have any collision on your map. Are you sure to continue?.");
             return;
         }

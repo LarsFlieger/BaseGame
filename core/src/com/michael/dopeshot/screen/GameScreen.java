@@ -79,7 +79,7 @@ public class GameScreen extends AbstractScreen {
     public void spawnPlayer(Vector2 spawnPoint) {
         resetBodiesAndFixtureDefinition();
 
-        bodyDef.position.set(spawnPoint);
+        bodyDef.position.set(spawnPoint.x, spawnPoint.y + 0.5f); //0.5f is half of player size
         bodyDef.fixedRotation = true;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         player = world.createBody(bodyDef);
